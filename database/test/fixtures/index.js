@@ -1,7 +1,9 @@
 const uuid = require('uuid/v4'); // eslint-disable-line
 
+const idUser = uuid();
+
 function getUser() {
-  const id = uuid();
+  const id = idUser;
   return {
     id,
     username: `Jhon-${id}`,
@@ -13,7 +15,7 @@ function getPost() {
   const id = uuid();
   return {
     id,
-    userId: uuid(),
+    userId: idUser,
     title: 'Lorem ipsum dolor',
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed.',
   };

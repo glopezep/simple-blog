@@ -16,6 +16,18 @@ class Database {
     return Promise.resolve(tasks()).asCallback(callback);
   }
 
+  static savePost(post, callback) {
+    const task = co.wrap(function* () {
+      try {
+        const createdPost = yield models.Post.create(post);
+        return Promise.resolve(createdPost);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+    return Promise.resolve(task()).asCallback(callback);
+  }
+
   static setup(callback) {
     co(function* () {
       try {
