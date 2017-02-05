@@ -66,6 +66,26 @@ test('save Post', async (t) => {
   t.is(result.userId, post.userId);
 });
 
+test('List posts', async (t) => {
+  t.is(typeof Database.listPosts, 'function', 'Should be a function');
+
+  const user = fixtures.getUser();
+  const posts = fixtures.getPosts();
+  const savePosts = [];
+
+  await Database.saveUser(user);
+
+  posts.forEach((item) => {
+    const post = Object.assign({}, item);
+    post.userId = user.id;
+    savePosts.push(Database.savePost(post));
+  });
+
+  await Promise.all(savePosts);
+
+  const result = await Database.listPosts();
+  t.truthy(result.length);
+});
 
 test('List post by user', async (t) => {
   t.is(typeof Database.getPostById, 'function', 'Should be a function');
@@ -85,6 +105,5 @@ test('List post by user', async (t) => {
   await Promise.all(savePosts);
 
   const result = await Database.listPostsByUser(user.id);
-  console.log(result);
   t.truthy(result.length);
 });
