@@ -61,6 +61,26 @@ class Database {
       try {
         const result = yield models.Post.findOne({
           where: { id },
+          include: [
+            { model: models.User },
+          ],
+        });
+        return Promise.resolve(result);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+    return Promise.resolve(task()).asCallback(callback);
+  }
+
+  static listPostsByUser(id, callback) {
+    const task = co.wrap(function* () {
+      try {
+        const result = yield models.Post.findAll({
+          where: { userId: id },
+          include: [
+            { model: models.User },
+          ],
         });
         return Promise.resolve(result);
       } catch (e) {

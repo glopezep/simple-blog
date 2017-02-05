@@ -67,22 +67,24 @@ test('save Post', async (t) => {
 });
 
 
-test('Get post by id', async (t) => {
+test('List post by user', async (t) => {
   t.is(typeof Database.getPostById, 'function', 'Should be a function');
 
   const user = fixtures.getUser();
-  const post = fixtures.getPost();
-
-  post.userId = user.id;
+  const posts = fixtures.getPosts();
+  const savePosts = [];
 
   await Database.saveUser(user);
-  await Database.savePost(post);
 
-  const fetched = await Database.getPostById(post.id);
-  const result = fetched.toJSON();
+  posts.forEach((item) => {
+    const post = Object.assign({}, item);
+    post.userId = user.id;
+    savePosts.push(Database.savePost(post));
+  });
 
-  t.is(result.id, post.id);
-  t.is(result.title, post.title);
-  t.is(result.content, post.content);
-  t.is(result.userId, post.userId);
+  await Promise.all(savePosts);
+
+  const result = await Database.listPostsByUser(user.id);
+  console.log(result);
+  t.truthy(result.length);
 });
