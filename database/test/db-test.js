@@ -22,6 +22,19 @@ test('Save user', async (t) => {
   t.is(result.password, user.password);
 });
 
+test('Get use by id', async (t) => {
+  t.is(typeof Database.getUserById, 'function', 'Should be a function');
+
+  const user = fixtures.getUser();
+  await Database.saveUser(user);
+  const fetched = await Database.getUserById(user.id);
+  const result = fetched.toJSON();
+
+  t.is(result.id, user.id);
+  t.is(result.username, user.username);
+  t.is(result.password, user.password);
+});
+
 test('save Post', async (t) => {
   t.is(typeof Database.savePost, 'function', 'Should be a function.');
 

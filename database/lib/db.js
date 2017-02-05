@@ -16,6 +16,20 @@ class Database {
     return Promise.resolve(task()).asCallback(callback);
   }
 
+  static getUserById(id, callback) {
+    const task = co.wrap(function* () {
+      try {
+        const result = yield models.User.findOne({
+          where: { id },
+        });
+        return Promise.resolve(result);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+    return Promise.resolve(task()).asCallback(callback);
+  }
+
   static savePost(post, callback) {
     const task = co.wrap(function* () {
       try {
