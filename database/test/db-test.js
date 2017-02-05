@@ -36,7 +36,7 @@ test('Get user by id', async (t) => {
 });
 
 test('Get user by username', async (t) => {
-  t.is(typeof Database.getUserById, 'function', 'Should be a function');
+  t.is(typeof Database.getUserByUsername, 'function', 'Should be a function');
 
   const user = fixtures.getUser();
   await Database.saveUser(user);
@@ -46,6 +46,18 @@ test('Get user by username', async (t) => {
   t.is(result.id, user.id);
   t.is(result.username, user.username);
   t.is(result.password, user.password);
+});
+
+test('Delete user', async (t) => {
+  t.is(typeof Database.deleteUser, 'function', 'Should be a function');
+
+  const user = fixtures.getUser();
+  await Database.saveUser(user);
+  const deleted = await Database.deleteUser(user.id);
+
+  t.is(deleted.id, user.id);
+  t.is(deleted.username, user.username);
+  t.is(deleted.password, user.password);
 });
 
 test('save Post', async (t) => {

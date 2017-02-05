@@ -44,6 +44,24 @@ class Database {
     return Promise.resolve(task()).asCallback(callback);
   }
 
+  static deleteUser(id, callback) {
+    const getUserById = this.getUserById.bind(this);
+
+    const task = co.wrap(function* () {
+      try {
+        const result = yield getUserById(id);
+        const deleted = result.toJSON();
+
+        yield result.destroy();
+
+        return Promise.resolve(deleted);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+    return Promise.resolve(task()).asCallback(callback);
+  }
+
   static savePost(post, callback) {
     const task = co.wrap(function* () {
       try {
