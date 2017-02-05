@@ -1,5 +1,5 @@
 export DB_NAME='blog'
-export DB_USERNAME=''
-export DB_PASSWORD=''
+export DB_USERNAME='emry'
+export DB_PASSWORD='er3030'
 export DB_HOST='localhost'
 export DB_ENGINE='mysql'
