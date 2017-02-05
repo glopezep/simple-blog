@@ -56,6 +56,20 @@ class Database {
     return Promise.resolve(task()).asCallback(callback);
   }
 
+  static getPostById(id, callback) {
+    const task = co.wrap(function* () {
+      try {
+        const result = yield models.Post.findOne({
+          where: { id },
+        });
+        return Promise.resolve(result);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+    return Promise.resolve(task()).asCallback(callback);
+  }
+
   static setup(callback) {
     co(function* () {
       try {

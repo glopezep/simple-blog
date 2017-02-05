@@ -65,3 +65,24 @@ test('save Post', async (t) => {
   t.is(result.content, post.content);
   t.is(result.userId, post.userId);
 });
+
+
+test('Get post by id', async (t) => {
+  t.is(typeof Database.getPostById, 'function', 'Should be a function');
+
+  const user = fixtures.getUser();
+  const post = fixtures.getPost();
+
+  post.userId = user.id;
+
+  await Database.saveUser(user);
+  await Database.savePost(post);
+
+  const fetched = await Database.getPostById(post.id);
+  const result = fetched.toJSON();
+
+  t.is(result.id, post.id);
+  t.is(result.title, post.title);
+  t.is(result.content, post.content);
+  t.is(result.userId, post.userId);
+});
