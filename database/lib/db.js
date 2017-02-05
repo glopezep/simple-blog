@@ -1,6 +1,6 @@
 const co = require('co');
 const Promise = require('bluebird');
-const sequelize = require('./sequelize');
+// const sequelize = require('./sequelize');
 const models = require('../models');
 
 class Database {
@@ -139,7 +139,8 @@ class Database {
   static dropTables(callback) {
     co(function* () {
       try {
-        yield sequelize.drop();
+        yield models.Post.drop();
+        yield models.User.drop();
         return Promise.resolve('Drop tables completed').asCallBack(callback);
       } catch (e) {
         return Promise.reject(e).asCallBack(callback);
