@@ -5,7 +5,7 @@ const models = require('../models');
 
 class Database {
   static saveUser(user, callback) {
-    const tasks = co.wrap(function* () {
+    const task = co.wrap(function* () {
       try {
         const created = yield models.User.create(user);
         return Promise.resolve(created);
@@ -13,14 +13,14 @@ class Database {
         return Promise.reject(e);
       }
     });
-    return Promise.resolve(tasks()).asCallback(callback);
+    return Promise.resolve(task()).asCallback(callback);
   }
 
   static savePost(post, callback) {
     const task = co.wrap(function* () {
       try {
-        const createdPost = yield models.Post.create(post);
-        return Promise.resolve(createdPost);
+        const created = yield models.Post.create(post);
+        return Promise.resolve(created);
       } catch (e) {
         return Promise.reject(e);
       }
