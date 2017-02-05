@@ -1,6 +1,6 @@
 const co = require('co');
 const Promise = require('bluebird');
-// const sequelize = require('./sequelize');
+const sequelize = require('./sequelize');
 const models = require('../models');
 
 class Database {
@@ -125,27 +125,27 @@ class Database {
   }
 
   static setup(callback) {
-    co(function* () {
+    const task = co.wrap(function* () {
       try {
-        yield models.User.sync();
-        yield models.Post.sync();
-        return Promise.resolve('Setup completed').asCallback(callback);
+        yield sequelize.sync();
+        return Promise.resolve('Setup completed');
       } catch (e) {
-        return Promise.reject(e).asCallback(callback);
+        return Promise.reject(e);
       }
     });
+    return Promise.resolve(task()).asCallback(callback);
   }
 
   static dropTables(callback) {
-    co(function* () {
+    const task = co.wrap(function* () {
       try {
-        yield models.Post.drop();
-        yield models.User.drop();
-        return Promise.resolve('Drop tables completed').asCallBack(callback);
+        yield sequelize.drop();
+        return Promise.resolve('Drop tables completed');
       } catch (e) {
-        return Promise.reject(e).asCallBack(callback);
+        return Promise.reject(e);
       }
     });
+    return Promise.resolve(task()).asCallback(callback);
   }
 }
 
