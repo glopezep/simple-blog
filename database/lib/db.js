@@ -1,25 +1,40 @@
-const sequelize = require('./sequelize');
 const co = require('co');
+const Promise = require('bluebird');
+const sequelize = require('./sequelize');
+const models = require('../models');
 
 class Database {
-  static setup() {
-    co(function* () {
+  static saveUser(user, callback) {
+    const tasks = co.wrap(function* () {
       try {
-        yield sequelize.sync();
-        return Promise.resolve('Setup completed');
+        const created = yield models.User.create(user);
+        return Promise.resolve(created);
       } catch (e) {
         return Promise.reject(e);
       }
     });
+    return Promise.resolve(tasks()).asCallback(callback);
   }
 
-  static dropTables() {
+  static setup(callback) {
+    co(function* () {
+      try {
+        yield models.User.sync();
+        yield models.Post.sync();
+        return Promise.resolve('Setup completed').asCallback(callback);
+      } catch (e) {
+        return Promise.reject(e).asCallback(callback);
+      }
+    });
+  }
+
+  static dropTables(callback) {
     co(function* () {
       try {
         yield sequelize.drop();
-        return Promise.resolve('Drop tables completed');
+        return Promise.resolve('Drop tables completed').asCallBack(callback);
       } catch (e) {
-        return Promise.reject(e);
+        return Promise.reject(e).asCallBack(callback);
       }
     });
   }
