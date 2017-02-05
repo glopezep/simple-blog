@@ -10,5 +10,6 @@ test.after.always('Cleanup database', async () => {
 });
 
 test('Pass', async (t) => {
+  console.log(process.env.DB_NAME);
   t.pass();
 });
