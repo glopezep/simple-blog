@@ -123,6 +123,23 @@ class Database {
     });
     return Promise.resolve(task()).asCallback(callback);
   }
+  static deletePostById(id, callback) {
+    const getPostById = this.getPostById.bind(this);
+    const task = co.wrap(function* () {
+      try {
+        const post = yield getPostById(id);
+        yield models.Post.destroy({
+          where: {
+            id,
+          },
+        });
+        return Promise.resolve(post);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+    return Promise.resolve(task()).asCallback(callback);
+  }
 
   static setup(callback) {
     const task = co.wrap(function* () {

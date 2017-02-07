@@ -119,3 +119,37 @@ test('List post by user', async (t) => {
   const result = await Database.listPostsByUser(user.id);
   t.truthy(result.length);
 });
+
+test('Get post by id', async (t) => {
+  const post = fixtures.getPost();
+  const user = fixtures.getUser();
+
+  post.userId = user.id;
+
+  await Database.saveUser(user);
+  await Database.savePost(post);
+  t.is(typeof Database.getPostById, 'function', 'Should be a function');
+
+  const result = await Database.getPostById(post.id);
+  t.is(result.id, post.id);
+  t.is(result.title, post.title);
+  t.is(result.userId, post.userId);
+  t.is(result.content, post.content);
+});
+
+test('delete post by id', async (t) => {
+  const post = fixtures.getPost();
+  const user = fixtures.getUser();
+
+  post.userId = user.id;
+
+  await Database.saveUser(user);
+  await Database.savePost(post);
+  t.is(typeof Database.deletePostById, 'function', 'Should be a function');
+
+  const result = await Database.deletePostById(post.id);
+  t.is(result.id, post.id);
+  t.is(result.title, post.title);
+  t.is(result.userId, post.userId);
+  t.is(result.content, post.content);
+});
