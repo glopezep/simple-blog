@@ -78,3 +78,68 @@ test('Delete user', async (t) => {
 
   t.deepEqual(result, user);
 });
+
+test('Save post', async (t) => {
+  const client = t.context.client;
+  const post = fixtures.getPost();
+
+  nock(options.endpoints.posts)
+    .post('', post)
+    .reply('201', post);
+
+  const result = await client.savePost(post);
+  t.deepEqual(result, post);
+});
+
+test('Get post by id', async (t) => {
+  const client = t.context.client;
+  const post = fixtures.getPost();
+
+  nock(options.endpoints.posts)
+    .get(`/${post.id}`)
+    .reply(200, post);
+
+  const result = await client.getPostById(post.id);
+
+  t.deepEqual(result, post);
+});
+
+test('List posts', async (t) => {
+  const client = t.context.client;
+  const posts = fixtures.getPosts();
+
+  nock(options.endpoints.posts)
+    .get('/list')
+    .reply(200, posts);
+
+  const result = await client.listPosts();
+
+  t.deepEqual(result, posts);
+});
+
+test('List posts by user', async (t) => {
+  const client = t.context.client;
+  const user = fixtures.getUser();
+  const posts = fixtures.getPosts();
+
+  nock(options.endpoints.posts)
+    .get(`/list/${user.id}`)
+    .reply(200, posts);
+
+  const result = await client.listPostsByUser(user.id);
+
+  t.deepEqual(result, posts);
+});
+
+test('Delete post', async (t) => {
+  const client = t.context.client;
+  const post = fixtures.getPost();
+
+  nock(options.endpoints.posts)
+    .delete(`/${post.id}`)
+    .reply(200, post);
+
+  const result = await client.deletePostById(post.id);
+
+  t.deepEqual(result, post);
+});

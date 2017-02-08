@@ -50,24 +50,50 @@ class Client {
     return Promise.resolve(request(options)).asCallback(callback);
   }
 
-  savePost() {
-    return this.options;
+  savePost(post, callback) {
+    const options = {
+      method: 'POST',
+      uri: this.options.endpoints.posts,
+      body: post,
+      json: true,
+    };
+    return Promise.resolve(request(options)).asCallback(callback);
   }
 
-  getPostById() {
-    return this.options;
+  getPostById(id, callback) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.posts}/${id}`,
+      json: true,
+    };
+    return Promise.resolve(request(options)).asCallback(callback);
   }
 
-  listPosts() {
-    return this.options;
+  listPosts(callback) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.posts}/list`,
+      json: true,
+    };
+    return Promise.resolve(request(options)).asCallback(callback);
   }
 
-  listPostsByUser() {
-    return this.options;
+  listPostsByUser(id, callback) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.posts}/list/${id}`,
+      json: true,
+    };
+    return Promise.resolve(request(options)).asCallback(callback);
   }
 
-  deletePostById() {
-    return this.options;
+  deletePostById(id, callback) {
+    const options = {
+      method: 'DELETE',
+      uri: `${this.options.endpoints.posts}/${id}`,
+      json: true,
+    };
+    return Promise.resolve(request(options)).asCallback(callback);
   }
 }
 
