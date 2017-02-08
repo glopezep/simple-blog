@@ -5,7 +5,7 @@ const models = require('../models');
 
 class Database {
   static saveUser(user, callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* saveUserTask() {
       try {
         const created = yield models.User.create(user);
         return Promise.resolve(created);
@@ -17,7 +17,7 @@ class Database {
   }
 
   static getUserById(id, callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* getUserByIdTask() {
       try {
         const result = yield models.User.findOne({
           where: { id },
@@ -31,7 +31,7 @@ class Database {
   }
 
   static getUserByUsername(username, callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* getUserByUsernameTask() {
       try {
         const result = yield models.User.findOne({
           where: { username },
@@ -47,13 +47,11 @@ class Database {
   static deleteUser(id, callback) {
     const getUserById = this.getUserById.bind(this);
 
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* deleteUserTask() {
       try {
         const result = yield getUserById(id);
         const deleted = result.toJSON();
-
         yield result.destroy();
-
         return Promise.resolve(deleted);
       } catch (e) {
         return Promise.reject(e);
@@ -63,7 +61,7 @@ class Database {
   }
 
   static savePost(post, callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* savePostTask() {
       try {
         const created = yield models.Post.create(post);
         return Promise.resolve(created);
@@ -75,7 +73,7 @@ class Database {
   }
 
   static getPostById(id, callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* getPostByIdTask() {
       try {
         const result = yield models.Post.findOne({
           where: { id },
@@ -92,7 +90,7 @@ class Database {
   }
 
   static listPosts(callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* listPostsTask() {
       try {
         const result = yield models.Post.findAll({
           include: [
@@ -108,7 +106,7 @@ class Database {
   }
 
   static listPostsByUser(id, callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* listPostsByUserTask() {
       try {
         const result = yield models.Post.findAll({
           where: { userId: id },
@@ -125,15 +123,12 @@ class Database {
   }
   static deletePostById(id, callback) {
     const getPostById = this.getPostById.bind(this);
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* deletePostByIdTask() {
       try {
-        const post = yield getPostById(id);
-        yield models.Post.destroy({
-          where: {
-            id,
-          },
-        });
-        return Promise.resolve(post);
+        const result = yield getPostById(id);
+        const deleted = result.toJSON();
+        yield result.destroy();
+        return Promise.resolve(deleted);
       } catch (e) {
         return Promise.reject(e);
       }
@@ -142,7 +137,7 @@ class Database {
   }
 
   static setup(callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* setupTask() {
       try {
         yield sequelize.sync();
         return Promise.resolve('Setup completed');
@@ -154,7 +149,7 @@ class Database {
   }
 
   static dropTables(callback) {
-    const task = co.wrap(function* () {
+    const task = co.wrap(function* dropTablesTask() {
       try {
         yield sequelize.drop();
         return Promise.resolve('Drop tables completed');
