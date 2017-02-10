@@ -1,0 +1,11 @@
+{
+  "name": "websocket",
+  "version": "0.1.0",
+  "description": "Simple blog server realtime",
+  "main": "index.js",
+  "repository": {},
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^1.7.2"
+  }
+}
