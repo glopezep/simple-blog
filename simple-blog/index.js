@@ -65,6 +65,15 @@ app.get('/api/post/list', (req, res) => {
   });
 });
 
+app.get('/api/post/list/:userId', (req, res) => {
+  const id = req.params.userId;
+
+  client.listPostsByUser(id, (err, posts) => {
+    if (err) return res.json(err);
+    res.json(posts);
+  });
+});
+
 app.get('/api/post/:id', (req, res) => {
   const id = req.params.id;
 
@@ -73,5 +82,7 @@ app.get('/api/post/:id', (req, res) => {
     res.json(post);
   });
 });
+
+
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
