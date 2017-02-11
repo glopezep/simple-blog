@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post('/api/user/save', (req, res) => {
-  console.log(req.body);
   const user = req.body;
 
   client.saveUser(user, (err, usr) => {
@@ -23,6 +22,7 @@ app.post('/api/user/save', (req, res) => {
 
 app.get('/api/user/username/:username', (req, res) => {
   const username = req.params.username;
+
   client.getUserByUsername(username, (err, user) => {
     if (err) return res.json(err);
     res.json(user);
@@ -38,13 +38,21 @@ app.get('/api/user/:id', (req, res) => {
   });
 });
 
-
 app.delete('/api/user/:id', (req, res) => {
   const id = req.params.id;
 
   client.deleteUser(id, (err, user) => {
     if (err) return res.json(err);
     res.json(user);
+  });
+});
+
+app.post('/api/post/save', (req, res) => {
+  const post = req.body;
+
+  client.savePost(post, (err, post) => {
+    if (err) return res.json(err);
+    res.json(post);
   });
 });
 
