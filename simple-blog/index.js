@@ -56,6 +56,15 @@ app.post('/api/post/save', (req, res) => {
   });
 });
 
+app.get('/api/post/list', (req, res) => {
+  const id = req.params.id;
+
+  client.listPosts((err, posts) => {
+    if (err) return res.json(err);
+    res.json(posts);
+  });
+});
+
 app.get('/api/post/:id', (req, res) => {
   const id = req.params.id;
 
