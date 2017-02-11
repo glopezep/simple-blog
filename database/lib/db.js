@@ -46,7 +46,7 @@ class Database {
     return Promise.resolve(task()).asCallback(callback);
   }
 
-  static deleteUser(id, callback) {
+  static deleteUserById(id, callback) {
     const getUserById = this.getUserById.bind(this);
 
     const task = co.wrap(function* deleteUserTask() {

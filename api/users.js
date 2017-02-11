@@ -30,7 +30,7 @@ hash.set('GET /:id', async (req, res, params) => {
 
 hash.set('DELETE /:id', async (req, res, params) => {
   const id = params.id;
-  const user = await Database.deleteUser(id);
+  const user = await Database.deleteUserById(id);
   delete user.password;
   send(res, 200, user);
 });

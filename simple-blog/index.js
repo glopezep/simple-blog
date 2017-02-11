@@ -83,6 +83,15 @@ app.get('/api/post/:id', (req, res) => {
   });
 });
 
+app.delete('/api/post/:id', (req, res) => {
+  const id = req.params.id;
+
+  client.deletePostById(id, (err, post) => {
+    if (err) return res.json(err);
+    res.json(post);
+  });
+});
+
 
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
