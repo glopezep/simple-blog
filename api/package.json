@@ -8,8 +8,8 @@
   "scripts": {
     "test": "yarn lint && NODE_ENV=test ava ./test/*-test.js",
     "lint": "eslint ./**/*.js",
-    "users": "micro users -p 5000",
-    "posts": "micro posts -p 5001"
+    "users": "micro users -p 3002",
+    "posts": "micro posts -p 3003"
   },
   "devDependencies": {
     "ava": "^0.18.1",
