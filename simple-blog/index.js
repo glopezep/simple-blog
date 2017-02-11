@@ -42,7 +42,7 @@ app.get('/api/user/:id', (req, res) => {
 app.delete('/api/user/:id', (req, res) => {
   const id = req.params.id;
 
-  client.getUserById(id, (err, user) => {
+  client.deleteUser(id, (err, user) => {
     if (err) return res.json(err);
     res.json(user);
   });
