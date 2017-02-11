@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 app.post('/api/user/save', (req, res) => {
   const user = req.body;
 
-  client.saveUser(user, (err, usr) => {
+  client.saveUser(user, (err, user) => {
     if (err) return res.json(err);
-    res.json(usr);
+    res.json(user);
   });
 });
 
@@ -51,6 +51,15 @@ app.post('/api/post/save', (req, res) => {
   const post = req.body;
 
   client.savePost(post, (err, post) => {
+    if (err) return res.json(err);
+    res.json(post);
+  });
+});
+
+app.get('/api/post/:id', (req, res) => {
+  const id = req.params.id;
+
+  client.getPostById(id, (err, post) => {
     if (err) return res.json(err);
     res.json(post);
   });
