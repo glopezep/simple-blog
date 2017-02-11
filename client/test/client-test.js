@@ -1,5 +1,5 @@
 import test from 'ava'; // eslint-disable-line
-import nock from 'nock';
+import nock from 'nock'; // eslint-disable-line
 import simpleblog from '../';
 import fixtures from './fixtures';
 
@@ -14,9 +14,20 @@ test.beforeEach((t) => {
   t.context.client = simpleblog.createClient(options); // eslint-disable-line
 });
 
-test('Save user', async (t) => {
+test('Class methods', (t) => {
+  const client = t.context.client;
   t.is(typeof client.saveUser, 'function', 'Should be a function');
+  t.is(typeof client.getUserById, 'function', 'Should be a function');
+  t.is(typeof client.getUserByUsername, 'function', 'Should be a function');
+  t.is(typeof client.deleteUser, 'function', 'Should be a function');
+  t.is(typeof client.savePost, 'function', 'Should be a function');
+  t.is(typeof client.getPostById, 'function', 'Should be a function');
+  t.is(typeof client.listPosts, 'function', 'Should be a function');
+  t.is(typeof client.listPostsByUser, 'function', 'Should be a function');
+  t.is(typeof client.deletePostById, 'function', 'Should be a function');
+});
 
+test('Save user', async (t) => {
   const client = t.context.client;
   const user = fixtures.getUser();
 
@@ -29,8 +40,6 @@ test('Save user', async (t) => {
 });
 
 test('Get user by id', async (t) => {
-  t.is(typeof client.getUserById, 'function', 'Should be a function');
-
   const client = t.context.client;
   const user = fixtures.getUser();
 
@@ -44,8 +53,6 @@ test('Get user by id', async (t) => {
 });
 
 test('Get user by username', async (t) => {
-  t.is(typeof client.getUserByUsername, 'function', 'Should be a function');
-
   const client = t.context.client;
   const user = fixtures.getUser();
 
@@ -59,8 +66,6 @@ test('Get user by username', async (t) => {
 });
 
 test('Delete user', async (t) => {
-  t.is(typeof client.deleteUser, 'function', 'Should be a function');
-
   const client = t.context.client;
   const user = fixtures.getUser();
 
@@ -74,8 +79,6 @@ test('Delete user', async (t) => {
 });
 
 test('Save post', async (t) => {
-  t.is(typeof client.savePost, 'function', 'Should be a function');
-
   const client = t.context.client;
   const post = fixtures.getPost();
 
@@ -88,8 +91,6 @@ test('Save post', async (t) => {
 });
 
 test('Get post by id', async (t) => {
-  t.is(typeof client.getPostById, 'function', 'Should be a function');
-
   const client = t.context.client;
   const post = fixtures.getPost();
 
@@ -103,8 +104,6 @@ test('Get post by id', async (t) => {
 });
 
 test('List posts', async (t) => {
-  t.is(typeof client.listPosts, 'function', 'Should be a function');
-
   const client = t.context.client;
   const posts = fixtures.getPosts();
 
@@ -118,8 +117,6 @@ test('List posts', async (t) => {
 });
 
 test('List posts by user', async (t) => {
-  t.is(typeof client.listPostsByUser, 'function', 'Should be a function');
-
   const client = t.context.client;
   const user = fixtures.getUser();
   const posts = fixtures.getPosts();
@@ -134,8 +131,6 @@ test('List posts by user', async (t) => {
 });
 
 test('Delete post', async (t) => {
-  t.is(typeof client.deletePostById, 'function', 'Should be a function');
-
   const client = t.context.client;
   const post = fixtures.getPost();
 

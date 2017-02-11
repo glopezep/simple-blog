@@ -22,6 +22,7 @@ class Database {
         const result = yield models.User.findOne({
           where: { id },
         });
+        if (!result) throw new Error('User not found');
         return Promise.resolve(result);
       } catch (e) {
         return Promise.reject(e);
@@ -36,6 +37,7 @@ class Database {
         const result = yield models.User.findOne({
           where: { username },
         });
+        if (!result) throw new Error('User not found');
         return Promise.resolve(result);
       } catch (e) {
         return Promise.reject(e);
@@ -50,6 +52,7 @@ class Database {
     const task = co.wrap(function* deleteUserTask() {
       try {
         const result = yield getUserById(id);
+        if (!result) throw new Error('User not found');
         const deleted = result.toJSON();
         yield result.destroy();
         return Promise.resolve(deleted);
@@ -81,6 +84,7 @@ class Database {
             { model: models.User },
           ],
         });
+        if (!result) throw new Error('Post not found');
         return Promise.resolve(result);
       } catch (e) {
         return Promise.reject(e);
@@ -97,6 +101,7 @@ class Database {
             { model: models.User },
           ],
         });
+        if (!result) throw new Error('Posts not found');
         return Promise.resolve(result);
       } catch (e) {
         return Promise.reject(e);
@@ -114,6 +119,7 @@ class Database {
             { model: models.User },
           ],
         });
+        if (!result) throw new Error('Posts not found');
         return Promise.resolve(result);
       } catch (e) {
         return Promise.reject(e);
@@ -126,6 +132,7 @@ class Database {
     const task = co.wrap(function* deletePostByIdTask() {
       try {
         const result = yield getPostById(id);
+        if (!result) throw new Error('Post not found');
         const deleted = result.toJSON();
         yield result.destroy();
         return Promise.resolve(deleted);

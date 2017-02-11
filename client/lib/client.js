@@ -16,7 +16,7 @@ class Client {
   saveUser(user, callback) {
     const options = {
       method: 'POST',
-      uri: this.options.endpoints.users,
+      uri: `${this.options.endpoints.users}/save`,
       body: user,
       json: true,
     };
@@ -35,7 +35,7 @@ class Client {
   getUserByUsername(username, callback) {
     const options = {
       method: 'GET',
-      uri: `${this.options.endpoints.users}/search/${username}`,
+      uri: `${this.options.endpoints.users}/username/${username}`,
       json: true,
     };
     return Promise.resolve(request(options)).asCallback(callback);
@@ -53,7 +53,7 @@ class Client {
   savePost(post, callback) {
     const options = {
       method: 'POST',
-      uri: this.options.endpoints.posts,
+      uri: `${this.options.endpoints.posts}/save`,
       body: post,
       json: true,
     };

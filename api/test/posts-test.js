@@ -1,7 +1,7 @@
-import 'babel-register';
-import test from 'ava';
+import 'babel-register'; // eslint-disable-line
+import test from 'ava'; // eslint-disable-line
 import micro from 'micro';
-import listen from 'test-listen';
+import listen from 'test-listen'; // eslint-disable-line
 import request from 'request-promise-native';
 import posts from '../posts';
 import fixtures from './fixtures';

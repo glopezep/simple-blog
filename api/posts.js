@@ -48,7 +48,7 @@ async function main(req, res) {
       send(res, 500, { err: e.message });
     }
   } else {
-    send(res, 404, { err: 'route not found' })
+    send(res, 404, { err: 'route not found' });
   }
 }
 

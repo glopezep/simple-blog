@@ -1,7 +1,7 @@
-import 'babel-register';
-import test from 'ava';
+import 'babel-register'; // eslint-disable-line
+import test from 'ava'; // eslint-disable-line
 import micro from 'micro';
-import listen from 'test-listen';
+import listen from 'test-listen'; // eslint-disable-line
 import request from 'request-promise-native';
 import users from '../users';
 import fixtures from './fixtures';
@@ -11,7 +11,7 @@ test.beforeEach(async (t) => {
   t.context.url = await listen(srv); // eslint-disable-line
 });
 
-test('POST /', async (t) => {
+test('POST /save', async (t) => {
   const user = fixtures.getUser();
   const url = t.context.url;
 

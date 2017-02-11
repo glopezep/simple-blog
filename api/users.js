@@ -7,14 +7,14 @@ const hash = HttpHash();
 
 if (process.env.NODE_ENV === 'test') Database = DatabaseStub;
 
-hash.set('POST /', async (req, res) => {
-  const user = json(req);
+hash.set('POST /save', async (req, res) => {
+  const user = await json(req);
   const created = await Database.saveUser(user);
   delete created.password;
   send(res, 201, created);
 });
 
-hash.set('GET /search/:username', async (req, res, params) => {
+hash.set('GET /username/:username', async (req, res, params) => {
   const username = params.username;
   const user = await Database.getUserByUsername(username);
   delete user.password;
